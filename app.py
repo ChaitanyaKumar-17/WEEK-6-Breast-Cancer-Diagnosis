@@ -14,5 +14,12 @@ print(df.head())
 X = cancer_data.data.features.copy()
 y = cancer_data.data.targets.copy()
 
+# Removing redundant columns
+corr_matrix = X.corr()
+upper_triangle = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+columns_to_drop = [column for column in upper_triangle.columns if any(upper_triangle[column].abs() > 0.90)]
+X_reduced = X.drop(columns=columns_to_drop)
+
 # Split into training and testing sets to prevent data leakage
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_reduced, y, test_size=0.2, random_state=42)
+
