@@ -42,3 +42,14 @@ print(f"Linear SVM Accuracy: {accuracy_linear * 100:.2f}%\n")
 print("Classification Report:")
 print(classification_report(y_test, y_pred_linear, target_names=cancer_data.target_names))
 
+# Using rbf SVM
+svm_rbf = SVC(kernel='rbf', random_state=42)
+svm_rbf.fit(X_train_scaled, y_train)
+y_pred_rbf = svm_rbf.predict(X_test_scaled)
+
+accuracy_rbf = accuracy_score(y_test, y_pred_rbf)
+print(f"rbf SVM Accuracy: {accuracy_rbf * 100:.2f}%\n")
+
+print("Classification Report:")
+print(classification_report(y_test, y_pred_rbf, target_names=cancer_data.target_names))
+
